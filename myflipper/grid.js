@@ -106,19 +106,90 @@ const btn = document.getElementById('set-text-btn');
 const flipGridBtn = document.getElementById('flip-grid-btn');
 const clearBtn = document.getElementById('clear-btn');
 
-// Updated setText to match "SEND TO GRID" logic
+// Updated setText to match "SEND TO GRID" logic with layout requirements
 function setText(text) {
-    text = text.toUpperCase().padEnd(TOTAL_CELLS, ' ');
-    for (let i = 0; i < TOTAL_CELLS; i++) {
-        // Update input field
-        if (gridInputs[i]) {
-            gridInputs[i].value = text[i] === ' ' ? '' : text[i];
+    const lines = Array(ROWS).fill().map(() => Array(COLS).fill(' '));
+    const words = text.toUpperCase().trim().split(/\s+/).filter(w => w.length > 0);
+
+    // 1. Word-wrapping (Simple greedy)
+    const wrappedLines = [];
+    let currentLine = [];
+    let currentLen = 0;
+
+    for (const word of words) {
+        if (word.length > COLS) {
+            // Word is longer than the entire line width, must split it anyway
+            let remainingWord = word;
+            while (remainingWord.length > 0) {
+                if (currentLen > 0) {
+                    wrappedLines.push(currentLine.join(''));
+                    currentLine = [];
+                    currentLen = 0;
+                }
+                const chunk = remainingWord.slice(0, COLS);
+                wrappedLines.push(chunk);
+                remainingWord = remainingWord.slice(COLS);
+            }
+        } else if (currentLen + (currentLen > 0 ? 1 : 0) + word.length <= COLS) {
+            if (currentLen > 0) {
+                currentLine.push(' ');
+                currentLen += 1;
+            }
+            currentLine.push(word);
+            currentLen += word.length;
+        } else {
+            wrappedLines.push(currentLine.join(''));
+            currentLine = [word];
+            currentLen = word.length;
         }
+    }
+    if (currentLine.length > 0) {
+        wrappedLines.push(currentLine.join(''));
+    }
+
+    // Only take what fits in ROWS
+    const finalWrappedLines = wrappedLines.slice(0, ROWS);
+
+    // 2. Vertical Centering
+    const spareRows = ROWS - finalWrappedLines.length;
+    const startRow = Math.floor(spareRows / 2); // e.g. if 3 lines out of 5, spare=2, start=1 (1 blank above, 1 below)
+    // If spare is 1, floor(1/2) = 0. Requirement: "In the case of odds numbers have it higher in the grid rather than lower."
+    // 5 rows, 4 lines used -> spare=1. floor(1/2) = 0. One blank at bottom. Correct (higher).
+    // 5 rows, 2 lines used -> spare=3. floor(3/2) = 1. One blank above, two below. Correct (higher).
+
+    for (let i = 0; i < finalWrappedLines.length; i++) {
+        const lineText = finalWrappedLines[i];
+        const rowIdx = startRow + i;
+        if (rowIdx >= ROWS) break;
+
+        // 3. Horizontal Centering
+        const spareChars = COLS - lineText.length;
+        const startCol = Math.floor(spareChars / 2);
         
-        // Flip the letter to match
-        setTimeout(() => {
-            flippers[i].setChar(text[i]);
-        }, i * 20);
+        for (let j = 0; j < lineText.length; j++) {
+            if (startCol + j < COLS) {
+                lines[rowIdx][startCol + j] = lineText[j];
+            }
+        }
+    }
+
+    // Flatten lines into a single string for consistency with existing logic if needed
+    // or just update flippers/inputs directly.
+    for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+            const i = r * COLS + c;
+            const char = lines[r][c];
+            
+            // Update input field
+            if (gridInputs[i]) {
+                gridInputs[i].value = char === ' ' ? '' : char;
+            }
+            
+            // Flip the letter to match
+            setTimeout(() => {
+                flippers[i].setChar(char);
+            }, i * 10); // Sped up the wave slightly for better feel
+        }
     }
 }
 
