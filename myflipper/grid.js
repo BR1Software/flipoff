@@ -1,4 +1,4 @@
-const COLS = 10;
+const COLS = 20;
 const ROWS = 5;
 const TOTAL_CELLS = COLS * ROWS;
 const gridElement = document.getElementById('grid');
