@@ -1,0 +1,54 @@
+.inputs-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+#input-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-cols), var(--flip-width));
+    grid-template-rows: repeat(var(--grid-rows), var(--flip-height));
+    gap: var(--gap);
+    transform-origin: center;
+    padding: 10px;
+    background: #f8f8f8;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.grid-input-cell {
+    width: 100%;
+    height: 100%;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 48px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    background: #fff;
+    color: #333;
+    outline: none;
+    transition: border-color 0.2s, background-color 0.2s;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.grid-input-cell:focus {
+    border-color: #555;
+    background-color: #f0f0f0;
+}
+
+.grid-input-cell::placeholder {
+    color: #eee;
+}
+
+/* Ensure the input-grid scales similarly if needed, though usually user wants to see what they type */
+#input-grid {
+    transition: transform 0.1s ease-out;
+}
