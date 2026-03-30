@@ -19,12 +19,27 @@ body, html {
     font-family: sans-serif;
 }
 
+/* Page Frame — mock browser window */
+.page-frame {
+    max-width: 1280px;
+    margin: 24px auto;
+    background: #F5F5F5;
+    border-radius: 16px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    min-height: calc(100vh - 48px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .scaling-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     width: 100%;
-    padding: 60px 10px; /* Increased vertical padding to prevent shadow clipping */
+    margin: 0;
+    padding: 60px 48px 40px; /* Increased vertical and horizontal padding to prevent shadow clipping and match layout */
     box-sizing: border-box;
     overflow: visible; /* Changed from hidden to allow shadows */
 }
@@ -34,13 +49,15 @@ body, html {
     grid-template-columns: repeat(var(--grid-cols), var(--flip-width));
     grid-template-rows: repeat(var(--grid-rows), var(--flip-height));
     gap: var(--gap);
-    transform-origin: center;
+    transform-origin: top left;
     transition: transform 0.1s ease-out;
     background: #000;
-    padding: 10px;
+    padding: 36px 48px 40px;
     border-radius: 20px;
     box-shadow: 0 50px 100px rgba(0,0,0,0.5);
     flex-shrink: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 .controls {

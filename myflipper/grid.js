@@ -69,31 +69,60 @@ function resizeGrid() {
     const inputContainer = document.querySelector('.inputs-container');
     if (!container || !gridElement || !inputGridElement) return;
 
-    const padding = 20; // 10px each side for #grid and #input-grid
-    const originalWidth = (COLS * 96) + ((COLS - 1) * 10) + padding;
-    const originalHeight = (ROWS * 128) + ((ROWS - 1) * 10) + padding;
+    // Get current CSS variable values
+    const style = getComputedStyle(document.documentElement);
+    const flipWidth = parseInt(style.getPropertyValue('--flip-width')) || 96;
+    const flipHeight = parseInt(style.getPropertyValue('--flip-height')) || 128;
+    const gap = parseInt(style.getPropertyValue('--gap')) || 10;
+
+    // Grid padding from grid.css: padding: 36px 48px 40px;
+    const gridPaddingTop = 36;
+    const gridPaddingRight = 48;
+    const gridPaddingBottom = 40;
+    const gridPaddingLeft = 48;
+
+    const originalWidth = (COLS * flipWidth) + ((COLS - 1) * gap) + gridPaddingLeft + gridPaddingRight;
+    const originalHeight = (ROWS * flipHeight) + ((ROWS - 1) * gap) + gridPaddingTop + gridPaddingBottom;
 
     // Set fixed dimensions so scale transform doesn't leave ghost layout space
     gridElement.style.width = originalWidth + 'px';
     gridElement.style.height = originalHeight + 'px';
-    inputGridElement.style.width = originalWidth + 'px';
-    inputGridElement.style.height = originalHeight + 'px';
 
-    const containerWidth = container.parentElement.clientWidth - 40;
+    // Input grid padding from grid-inputs.css: padding: 10px;
+    const inputGridPadding = 20; // 10px each side
+    const inputOriginalWidth = (COLS * flipWidth) + ((COLS - 1) * gap) + inputGridPadding;
+    const inputOriginalHeight = (ROWS * flipHeight) + ((ROWS - 1) * gap) + inputGridPadding;
+    
+    inputGridElement.style.width = inputOriginalWidth + 'px';
+    inputGridElement.style.height = inputOriginalHeight + 'px';
+
+    const parentWidth = container.parentElement.clientWidth;
+    const availableWidth = parentWidth - (48 * 2);
     const containerHeight = window.innerHeight * 0.45; 
     
-    const scale = Math.min(containerWidth / originalWidth, containerHeight / originalHeight, 1);
+    const scale = Math.min(availableWidth / originalWidth, containerHeight / originalHeight, 1);
     gridElement.style.transform = `scale(${scale})`;
     
-    // Update container layout size to match visual scaled size + extra padding
-    container.style.height = (originalHeight * scale + 120) + 'px'; // 120px = 60px padding top/bottom
+    // Set actual visual size on the container to center the scaled grid perfectly
+    const visualWidth = originalWidth * scale;
+    const visualHeight = originalHeight * scale;
+    
+    container.style.width = (visualWidth + (48 * 2)) + 'px';
+    container.style.height = (visualHeight + (60 + 40)) + 'px';
 
     // Scale input grid
     if (inputContainer) {
+        const inputParentWidth = inputContainer.parentElement.clientWidth;
+        const inputAvailableWidth = inputParentWidth - (48 * 2);
         const inputContainerHeight = window.innerHeight * 0.25;
-        const inputScale = Math.min(containerWidth / originalWidth, inputContainerHeight / originalHeight, 0.4); 
+        const inputScale = Math.min(inputAvailableWidth / inputOriginalWidth, inputContainerHeight / inputOriginalHeight, 0.4); 
         inputGridElement.style.transform = `scale(${inputScale})`;
-        inputContainer.style.height = (originalHeight * inputScale + 120) + 'px'; // 120px = 60px padding top/bottom
+        
+        const inputVisualWidth = inputOriginalWidth * inputScale;
+        const inputVisualHeight = inputOriginalHeight * inputScale;
+
+        inputContainer.style.width = (inputVisualWidth + (48 * 2)) + 'px';
+        inputContainer.style.height = (inputVisualHeight + (60 + 60)) + 'px'; // 120px = 60px padding top/bottom
     }
 }
 

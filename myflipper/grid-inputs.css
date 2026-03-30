@@ -1,8 +1,8 @@
 .inputs-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 60px 10px; /* Increased vertical padding to prevent shadow clipping */
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 60px 48px; /* Consistent padding with the flip grid container */
     box-sizing: border-box;
     width: 100%;
     overflow: visible; /* Changed from hidden to allow shadows */
@@ -16,12 +16,14 @@
     grid-template-columns: repeat(var(--grid-cols), var(--flip-width));
     grid-template-rows: repeat(var(--grid-rows), var(--flip-height));
     gap: var(--gap);
-    transform-origin: center;
+    transform-origin: top left;
     padding: 10px;
     background: #f8f8f8;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     flex-shrink: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 .grid-input-cell {

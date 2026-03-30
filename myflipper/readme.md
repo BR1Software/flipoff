@@ -7,3 +7,11 @@
 6. Add start tile on update so the tiles can update in a wave from the bottom or top or corners?
 7. Add font options - News Gothic Bold is the original
 8. Add a way to change all these options from the HTML (not hard coded).
+
+
+To test
+```bash
+# Or serve locally:
+python3 -m http.server 8080
+# Then open http://localhost:8080
+```
