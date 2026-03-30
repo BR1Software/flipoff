@@ -73,7 +73,7 @@ function resizeGrid() {
     const style = getComputedStyle(document.documentElement);
     const flipWidth = parseInt(style.getPropertyValue('--flip-width')) || 96;
     const flipHeight = parseInt(style.getPropertyValue('--flip-height')) || 128;
-    const gap = parseInt(style.getPropertyValue('--gap')) || 10;
+    const gap = parseInt(style.getPropertyValue('--gap')) || 16;
 
     // Grid padding from grid.css: padding: 36px 48px 40px;
     const gridPaddingTop = 36;
@@ -88,10 +88,20 @@ function resizeGrid() {
     gridElement.style.width = originalWidth + 'px';
     gridElement.style.height = originalHeight + 'px';
 
-    // Input grid padding from grid-inputs.css: padding: 10px;
-    const inputGridPadding = 20; // 10px each side
-    const inputOriginalWidth = (COLS * flipWidth) + ((COLS - 1) * gap) + inputGridPadding;
-    const inputOriginalHeight = (ROWS * flipHeight) + ((ROWS - 1) * gap) + inputGridPadding;
+    // Update gap if needed to accommodate the new border? 
+    // The border is inset -4px, so it adds 4px on each side of each flip.
+    // Total space between flips remains same as gap? No, they might overlap if gap < 8px.
+    // Gap is 10px, border is 4px on each side (total 8px between flips if they touch).
+    // So there is 2px of background showing between the borders. This is fine.
+
+    // Input grid padding from grid-inputs.css: padding: 36px 48px 40px;
+    const inputGridPaddingTop = 36;
+    const inputGridPaddingRight = 48;
+    const inputGridPaddingBottom = 40;
+    const inputGridPaddingLeft = 48;
+    
+    const inputOriginalWidth = (COLS * flipWidth) + ((COLS - 1) * gap) + inputGridPaddingLeft + inputGridPaddingRight;
+    const inputOriginalHeight = (ROWS * flipHeight) + ((ROWS - 1) * gap) + inputGridPaddingTop + inputGridPaddingBottom;
     
     inputGridElement.style.width = inputOriginalWidth + 'px';
     inputGridElement.style.height = inputOriginalHeight + 'px';
