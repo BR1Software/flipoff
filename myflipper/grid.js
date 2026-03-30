@@ -86,14 +86,14 @@ function resizeGrid() {
     gridElement.style.transform = `scale(${scale})`;
     
     // Update container layout size to match visual scaled size + extra padding
-    container.style.height = (originalHeight * scale + 60) + 'px'; // 60px = 30px padding top/bottom
+    container.style.height = (originalHeight * scale + 120) + 'px'; // 120px = 60px padding top/bottom
 
     // Scale input grid
     if (inputContainer) {
         const inputContainerHeight = window.innerHeight * 0.25;
         const inputScale = Math.min(containerWidth / originalWidth, inputContainerHeight / originalHeight, 0.4); 
         inputGridElement.style.transform = `scale(${inputScale})`;
-        inputContainer.style.height = (originalHeight * inputScale + 60) + 'px'; // 60px = 30px padding top/bottom
+        inputContainer.style.height = (originalHeight * inputScale + 120) + 'px'; // 120px = 60px padding top/bottom
     }
 }
 

@@ -2,10 +2,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 30px 10px; /* Increased top/bottom padding for breathing space */
+    padding: 60px 10px; /* Increased vertical padding to prevent shadow clipping */
     box-sizing: border-box;
     width: 100%;
-    overflow: hidden;
+    overflow: visible; /* Changed from hidden to allow shadows */
+    background: #fdfdfd; /* Light tint for visibility */
+    border-top: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;
 }
 
 #input-grid {

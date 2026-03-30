@@ -24,9 +24,9 @@ body, html {
     justify-content: center;
     align-items: center;
     width: 100%;
-    padding: 30px 10px; /* Increased top/bottom padding for breathing space */
+    padding: 60px 10px; /* Increased vertical padding to prevent shadow clipping */
     box-sizing: border-box;
-    overflow: hidden;
+    overflow: visible; /* Changed from hidden to allow shadows */
 }
 
 #grid {

@@ -4,7 +4,7 @@ class FlipLetter {
     this.current = " ";
     this.animating = false;
 
-    this.chars = options.chars || " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?.,:-+/";
+    this.chars = options.chars || " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?.,:-+/%@&()";
     this.flipDelay = options.flipDelay || 150;
 
     this._build();
