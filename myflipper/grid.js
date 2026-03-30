@@ -69,22 +69,31 @@ function resizeGrid() {
     const inputContainer = document.querySelector('.inputs-container');
     if (!container || !gridElement || !inputGridElement) return;
 
-    const containerWidth = container.clientWidth - 20;
-    const containerHeight = window.innerHeight * 0.4; // Allocate 40% of height for the main grid
+    const padding = 20; // 10px each side for #grid and #input-grid
+    const originalWidth = (COLS * 96) + ((COLS - 1) * 10) + padding;
+    const originalHeight = (ROWS * 128) + ((ROWS - 1) * 10) + padding;
+
+    // Set fixed dimensions so scale transform doesn't leave ghost layout space
+    gridElement.style.width = originalWidth + 'px';
+    gridElement.style.height = originalHeight + 'px';
+    inputGridElement.style.width = originalWidth + 'px';
+    inputGridElement.style.height = originalHeight + 'px';
+
+    const containerWidth = container.parentElement.clientWidth - 40;
+    const containerHeight = window.innerHeight * 0.45; 
     
-    const originalWidth = (COLS * 96) + ((COLS - 1) * 10) + 20;
-    const originalHeight = (ROWS * 128) + ((ROWS - 1) * 10) + 20;
-
     const scale = Math.min(containerWidth / originalWidth, containerHeight / originalHeight, 1);
-
     gridElement.style.transform = `scale(${scale})`;
+    
+    // Update container layout size to match visual scaled size + extra padding
+    container.style.height = (originalHeight * scale + 60) + 'px'; // 60px = 30px padding top/bottom
 
-    // Scale input grid as well to match
+    // Scale input grid
     if (inputContainer) {
-        const inputContainerWidth = inputContainer.clientWidth - 20;
-        const inputContainerHeight = window.innerHeight * 0.25; // Allocate 25% of height for input grid
-        const inputScale = Math.min(inputContainerWidth / originalWidth, inputContainerHeight / originalHeight, 0.4); 
+        const inputContainerHeight = window.innerHeight * 0.25;
+        const inputScale = Math.min(containerWidth / originalWidth, inputContainerHeight / originalHeight, 0.4); 
         inputGridElement.style.transform = `scale(${inputScale})`;
+        inputContainer.style.height = (originalHeight * inputScale + 60) + 'px'; // 60px = 30px padding top/bottom
     }
 }
 
