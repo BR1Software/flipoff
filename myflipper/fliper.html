@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flip Letter Demo</title>
+    <link rel="stylesheet" href="myflipper.css">
+    <style>
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        input {
+            width: 40px;
+            text-align: center;
+            font-size: 18px;
+            padding: 5px;
+            text-transform: uppercase;
+        }
+        button {
+            padding: 5px 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div id="flip-letter" class="flip-letter-host"></div>
+
+<div class="controls">
+    <input type="text" id="target-char" maxlength="1" placeholder="A">
+    <button id="flip-btn">Flip</button>
+    <button id="reset-btn">Reset</button>
+</div>
+
+<script src="FlipLetterAnimation.js"></script>
+</body>
+</html>
