@@ -6,7 +6,7 @@
     box-sizing: border-box;
     width: 100%;
     overflow: visible; /* Changed from hidden to allow shadows */
-    background: #fdfdfd; /* Light tint for visibility */
+    /* background: #fdfdfd; /* Light tint for visibility */
     border-top: 1px solid #f0f0f0;
     border-bottom: 1px solid #f0f0f0;
 }
