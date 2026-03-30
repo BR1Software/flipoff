@@ -52,9 +52,17 @@ class FlipLetter {
     this.leaf.appendChild(this.leafFront);
     this.leaf.appendChild(this.leafBack);
 
+    // Hinge elements
+    this.hingeLeft = document.createElement("div");
+    this.hingeLeft.className = "hinge left";
+    this.hingeRight = document.createElement("div");
+    this.hingeRight.className = "hinge right";
+
     this.container.appendChild(this.top);
     this.container.appendChild(this.bottom);
     this.container.appendChild(this.leaf);
+    this.container.appendChild(this.hingeLeft);
+    this.container.appendChild(this.hingeRight);
   }
 
   _randomChar() {

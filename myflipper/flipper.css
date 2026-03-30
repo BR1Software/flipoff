@@ -133,3 +133,27 @@
     40% { transform: translateY(-2px); }
     100% { transform: translateY(0); }
 }
+
+/* Hinge elements — small knobs at the vertical center of each flip unit */
+.hinge {
+    position: absolute;
+    top: 50%;
+    width: 6px;
+    height: 12px;
+    background: linear-gradient(to right, #222, #444, #222);
+    border-radius: 2px;
+    transform: translateY(-50%);
+    z-index: 20; /* Keep hinges on top */
+    box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 2px 4px rgba(0, 0, 0, 0.6);
+    pointer-events: none;
+}
+
+.hinge.left {
+    left: -2px;
+}
+
+.hinge.right {
+    right: -2px;
+}
